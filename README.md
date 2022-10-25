@@ -1,0 +1,2 @@
+# cassandra-practice
+Practice Cassandra
