@@ -1,0 +1,26 @@
+version: "3.8"
+services:
+  cassandra:
+    image: cassandra:latest
+    restart: always
+    ports:
+      - "7000:7000"
+      - "9042:9042"
+    volumes:
+      - /opt/cassandra/commitlog:/var/lib/cassandra/commitlog
+      - /opt/cassandra/hints:/var/lib/cassandra/hints
+      - /opt/cassandra/data:/var/lib/cassandra/data
+      - /opt/cassandra/saved_caches:/var/lib/cassandra/saved_caches
+      - /opt/cassandra/logs:/var/log/cassandra
+#      - /opt/cassandra/etc:/etc/cassandra
+    environment:
+      - CASSANDRA_PASSWORD_SEEDER=yes
+      - CASSANDRA_PASSWORD=cassandra
+      - MAX_HEAP_SIZE=2G
+      - HEAP_NEWSIZE=200M
+    networks:
+      - cassandra-net
+
+networks:
+  cassandra-net:
+    driver: bridge
