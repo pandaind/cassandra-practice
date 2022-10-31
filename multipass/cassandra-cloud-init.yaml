@@ -1,0 +1,16 @@
+package_update: true
+runcmd:
+ - sudo apt-get -y install openjdk-17-jre-headless
+ - sudo apt-get -y install wget
+ - wget -q -O - https://www.apache.org/dist/cassandra/KEYS | sudo apt-key add -
+ - echo "deb https://debian.cassandra.apache.org 41x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list deb https://debian.cassandra.apache.org 41x main
+ - sudo apt-get update
+ - sudo apt-get install cassandra -y
+ - sudo systemctl enable cassandra
+ - sudo systemctl start cassandra
+ #write_files:
+ #- content: |
+    # My new /etc/sysconfig/samba file
+#
+ #   SMBDOPTIONS="-D"
+ # path: /etc/sysconfig/samba
