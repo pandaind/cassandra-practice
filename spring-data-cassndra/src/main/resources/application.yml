@@ -1,0 +1,18 @@
+spring:
+  data:
+    cassandra:
+      contact-points: localhost
+      username:
+      password:
+      keyspace-name: ecommerce
+      port: 9042
+      schema-action: create_if_not_exists
+      connection:
+        connect-timeout: 10000ms
+        init-query-timeout: 10000ms
+      pool:
+        idle-timeout: 10000ms
+      request:
+        timeout: 10000ms
+      control-connection:
+        timeout: 10000ms
