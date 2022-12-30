@@ -16,3 +16,8 @@ spring:
         timeout: 10000ms
       control-connection:
         timeout: 10000ms
+
+
+logging:
+  level:
+    org.springframework.data.cassandra.core.cql.CqlTemplate: DEBUG
