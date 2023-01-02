@@ -33,7 +33,6 @@ public class DemoApplication implements CommandLineRunner {
 
 		addData(publisher);
 
-
 		List<Book> allBooks = bookService.fetchBooks();
 		System.out.println(allBooks);
 
@@ -53,6 +52,7 @@ public class DemoApplication implements CommandLineRunner {
 		List<Book> jdbcBooks = bookService.findAllByJDBC(2);
 		System.out.println(jdbcBooks);
 
+		bookService.truncate();
 	}
 
 	private String addData(String publisher) {

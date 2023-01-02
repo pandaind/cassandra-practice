@@ -69,4 +69,8 @@ public class BookService {
                 row.getString("publisher"),
                 row.getSet("tags", String.class)));
     }
+    public void truncate() {
+        operations.execute(QueryBuilder.truncate("book").build());
+    }
+
 }

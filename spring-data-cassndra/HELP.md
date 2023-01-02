@@ -19,3 +19,4 @@ The following guides illustrate how to use some features concretely:
 * [Spring Data for Apache Cassandra](https://spring.io/guides/gs/accessing-data-cassandra/)
 * [Spring Data Reactive for Apache Cassandra](https://spring.io/guides/gs/accessing-data-cassandra/)
 
+* [CQL](https://docs.datastax.com/en/dse/6.8/cql/index.html)
