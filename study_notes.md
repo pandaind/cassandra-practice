@@ -1325,3 +1325,59 @@ In Cassandra, Bloom filters are used to improve read performance by quickly dete
 
 - **Efficiency**: Bloom filters allow Cassandra to skip SSTables that do not contain the requested data, reducing the number of disk reads.
 - **Space-Efficient**: They provide a space-efficient way to filter out non-relevant SSTables, improving overall query performance.
+
+### Token
+
+In Cassandra, a token is a value that determines the range of data a node is responsible for. Tokens are used in the consistent hashing algorithm to distribute data evenly across the nodes in a cluster. Here's a detailed explanation:
+
+### How Tokens Work
+
+1. **Consistent Hashing**:
+   - Cassandra uses consistent hashing to distribute data across the nodes in the cluster.
+   - The entire token range is represented as a circular space (a ring), where each node is assigned a specific token or range of tokens.
+
+2. **Token Assignment**:
+   - Each node in the cluster is assigned one or more tokens, which define the range of data it is responsible for.
+   - The token ranges are calculated based on the partition key of the data.
+
+3. **Data Distribution**:
+   - When data is written to Cassandra, the partition key is hashed to produce a token.
+   - This token determines which node (or nodes, in the case of replication) will store the data.
+   - The data is stored on the node responsible for the token range that includes the hashed token value.
+
+### Example
+
+Consider a cluster with three nodes, each assigned a token range:
+
+- Node A: Token range 0 to 49
+- Node B: Token range 50 to 99
+- Node C: Token range 100 to 149
+
+When a piece of data with a partition key is written, the partition key is hashed to produce a token. For example, if the hashed token value is 75, the data will be stored on Node B, as it falls within the token range 50 to 99.
+
+### Token Management
+
+1. **Initial Token Assignment**:
+   - When a node is added to the cluster, it is assigned a token or a range of tokens.
+   - The initial token assignment can be done manually or automatically by Cassandra.
+
+2. **Token Reassignment**:
+   - When nodes are added or removed from the cluster, tokens may need to be reassigned to ensure even data distribution.
+   - Cassandra handles token reassignment automatically to maintain balance in the cluster.
+
+3. **Virtual Nodes (vnodes)**:
+   - Cassandra uses virtual nodes (vnodes) to improve data distribution and fault tolerance.
+   - Instead of assigning a single token range to each node, Cassandra assigns multiple smaller token ranges (vnodes) to each node.
+   - This allows for more even data distribution and easier rebalancing when nodes are added or removed.
+
+**Example of vnodes**:
+```yaml
+num_tokens: 256
+```
+In this example, each node is assigned 256 virtual nodes, which helps distribute the data more evenly across the cluster.
+
+### Benefits of Using Tokens
+
+- **Even Data Distribution**: Tokens ensure that data is evenly distributed across all nodes, preventing any single node from becoming a bottleneck.
+- **Scalability**: Tokens allow Cassandra to scale horizontally by adding more nodes to the cluster, each taking on a portion of the token range.
+- **Fault Tolerance**: By distributing data across multiple nodes, tokens help ensure that the failure of a single node does not result in data loss.
